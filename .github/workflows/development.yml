@@ -62,6 +62,10 @@ jobs:
         node-version: [18.x]
     needs: ['test']
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3

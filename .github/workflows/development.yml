@@ -60,7 +60,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-    needs: ['test', 'verify']
+    needs: ['test']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code

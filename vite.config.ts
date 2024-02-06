@@ -11,6 +11,7 @@ import svgr from 'vite-plugin-svgr';
 type ViteConfig = UserConfig & { test: InlineConfig };
 
 const config: ViteConfig = {
+  base: '/astb01/staybae-ui',
   plugins: [
     svgr(),
     react(),

@@ -17,7 +17,7 @@
     "test:e2e": "echo not implemented",
     "test:e2e:ci": "echo not implemented",
     "prepare": "husky",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@badrap/bar-of-progress": "^0.2.2",

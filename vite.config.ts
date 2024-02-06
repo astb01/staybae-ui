@@ -39,7 +39,7 @@ const config: ViteConfig = {
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './setUpTests.ts',
+    setupFiles: './setupTests.ts',
     css: true,
     coverage: {
       provider: 'istanbul',

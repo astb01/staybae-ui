@@ -1,5 +1,4 @@
 import { StarIcon } from '@heroicons/react/24/solid';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import PropertyType from 'src/interfaces/Property';
 
@@ -10,7 +9,9 @@ type InfoCardProps = {
 const InfoCard = ({ property }: InfoCardProps) => {
   return (
     <Link to={`/property/${property._id}`}>
-      <div className="flex py-7 px-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t">
+      <div
+        className="flex py-7 px-2 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t"
+        data-testid={'info-card'}>
         <div className="overflow-hidden rounded-lg flex-shrink-0">
           <img
             alt={property.description}
@@ -25,11 +26,15 @@ const InfoCard = ({ property }: InfoCardProps) => {
             </p>
           </div>
 
-          <div className="text-xl">{property.caption}</div>
+          <div className="text-xl" data-testid={'property-caption'}>
+            {property.caption}
+          </div>
 
           <div className="border-b w-10 pt-2" />
 
-          <div className="pt-2 text-sm text-gray-500">
+          <div
+            className="pt-2 text-sm text-gray-500"
+            data-testid={'property-desc'}>
             {property.description}
           </div>
 

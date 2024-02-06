@@ -120,8 +120,7 @@ jobs:
       - run: sed -i 's/%%APP_VERSION%%/${{needs.build.outputs.NEXT_TAG}}/g' src/config/AppVersion.tsx
       - run: npm ci
       - run: npm run build
-      - name: Deploy with gh-pages
-        run: |
+      - run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
         env:

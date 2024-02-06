@@ -1,5 +1,3 @@
-import { StringArraySupportOption } from 'prettier';
-
 export const SINGLE_PROPERTY = (id: string) => {
   return {
     _id: id,

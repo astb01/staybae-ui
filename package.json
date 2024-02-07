@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://astb01.github.io/staybae-ui",
   "scripts": {
     "dev": "vite",
     "server": "json-server --port 8000",

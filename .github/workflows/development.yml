@@ -124,7 +124,7 @@ jobs:
         run: npm install
       - run: sed -i 's/%%APP_VERSION%%/${{needs.build.outputs.NEXT_TAG}}/g' src/config/AppVersion.tsx
       - run: npm ci
-      - run: npx msw init public/
+      - run: npx msw init ./public --save
       - run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3

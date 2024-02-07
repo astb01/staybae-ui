@@ -8,15 +8,22 @@ import { BrowserRouter } from 'react-router-dom';
 import { FavouriteContextProvider } from './context/FavouritesContext';
 
 async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
+  // if (process.env.NODE_ENV !== 'development') {
+  //   return;
+  // }
 
   const { worker } = await import('./__mocks__/browser');
 
   // `worker.start()` returns a Promise that resolves
   // once the Service Worker is up and ready to intercept requests.
-  return worker.start();
+  return worker.start({
+    serviceWorker: {
+      url:
+        process.env.NODE_ENV !== 'development'
+          ? '/staybae/mockServiceWorker.js'
+          : '/',
+    },
+  });
 }
 
 enableMocking().then(() => {

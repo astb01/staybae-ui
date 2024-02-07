@@ -20,7 +20,7 @@ async function enableMocking() {
     serviceWorker: {
       url:
         process.env.NODE_ENV !== 'development'
-          ? '/staybae/mockServiceWorker.js'
+          ? '/staybae-ui/mockServiceWorker.js'
           : '/',
     },
   });

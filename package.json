@@ -48,7 +48,6 @@
     "react-router-dom": "^6.11.2",
     "react-spinners": "^0.13.8",
     "sort-by": "^1.2.0",
-    "vercel": "^33.4.1",
     "vite-plugin-istanbul": "^5.0.0",
     "vite-plugin-svgr": "^4.2.0"
   },

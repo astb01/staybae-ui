@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "preview": "vite preview",
-    "test:unit": "vitest",
+    "test:unit": "vitest run",
     "coverage": "vitest run --coverage",
     "test:unit:watch": "jest --watch",
     "test:e2e": "echo not implemented",

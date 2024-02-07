@@ -16,6 +16,10 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
 jobs:
   lint:
     strategy:
@@ -124,7 +128,6 @@ jobs:
         run: npm install
       - run: sed -i 's/%%APP_VERSION%%/${{needs.build.outputs.NEXT_TAG}}/g' src/config/AppVersion.tsx
       - run: npm ci
-      - run: npx msw init ./public --save
       - run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -136,3 +139,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+
+   Deploy-Preview:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+        - name: Pull Vercel Environment Information
+          run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Build Project Artifacts
+          run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Deploy Project Artifacts to Vercel
+          run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}

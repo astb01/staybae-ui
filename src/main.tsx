@@ -14,6 +14,8 @@ async function enableMocking() {
 
   const { worker } = await import('./__mocks__/browser');
 
+  console.log('ENV', process.env.NODE_ENV);
+
   // `worker.start()` returns a Promise that resolves
   // once the Service Worker is up and ready to intercept requests.
   return worker.start({
@@ -21,8 +23,9 @@ async function enableMocking() {
       url:
         process.env.NODE_ENV !== 'development'
           ? '/staybae-ui/mockServiceWorker.js'
-          : '/',
+          : '/mockServiceWorker.js',
     },
+    onUnhandledRequest: 'bypass',
   });
 }
 
@@ -30,7 +33,10 @@ enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
       <FavouriteContextProvider>
-        <BrowserRouter basename={'/staybae-ui/'}>
+        <BrowserRouter
+          basename={
+            process.env.NODE_ENV !== 'development' ? '/staybae-ui/' : '/'
+          }>
           <App />
         </BrowserRouter>
       </FavouriteContextProvider>

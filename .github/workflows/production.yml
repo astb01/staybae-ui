@@ -1,11 +1,11 @@
-name: Development Pipeline
-run-name: 'Build: $${{ github.ref_name }} :rocket:'
+name: Production Pipeline
+run-name: 'Building production release :rocket:''
 
 on:
   push:
-    branches-ignore: [main]
+    branches: [main]
   pull_request:
-    branches-ignore: [main]
+    branches: [main]
 
 permissions:
   contents: read
@@ -82,19 +82,21 @@ jobs:
       pull-requests: write
       repository-projects: write
     outputs:
-      CURRENT_TAG: ${{steps.build_version.outputs.current_tag}}
+      NEXT_TAG: ${{steps.build_version.outputs.new_tag}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Get current tag
+      - name: Bump version and push tag
         id: build_version
-        run: echo "current_tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Node ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: sed -i 's/%%APP_VERSION%%/${{steps.build_version.outputs.current_tag}}-wip/g' src/config/AppVersion.tsx
+      - run: sed -i 's/%%APP_VERSION%%/${{steps.build_version.outputs.new_tag}}/g' src/config/AppVersion.tsx
       - run: npm ci
       - run: npm run build
       - name: Login to Docker Hub
@@ -107,7 +109,7 @@ jobs:
         with:
           context: ./
           push: true
-          tags: astb01/staybae-ui:${{steps.build_version.outputs.current_tag}}-wip,astb01/staybae-ui:latest
+          tags: astb01/staybae-ui:${{steps.build_version.outputs.new_tag}},astb01/staybae-ui:latest
 
   # Deploy job
   deploy:
@@ -126,7 +128,7 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
-      - run: sed -i 's/%%APP_VERSION%%/${{needs.build.outputs.CURRENT_TAG}}-wip/g' src/config/AppVersion.tsx
+      - run: sed -i 's/%%APP_VERSION%%/${{needs.build.outputs.NEXT_TAG}}/g' src/config/AppVersion.tsx
       - run: npm ci
       - run: npm run build
       - name: Setup Pages

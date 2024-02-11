@@ -1,5 +1,5 @@
 name: Development Pipeline
-run-name: 'Build: $${{ github.ref_name }} :rocket:'
+run-name: 'Build: ${{ github.ref_name }}'
 
 on:
   push:

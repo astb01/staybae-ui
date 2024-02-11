@@ -1,5 +1,5 @@
 name: Production Pipeline
-run-name: 'Building production release :rocket:'
+run-name: 'Building production release'
 
 on:
   push:
@@ -106,6 +106,12 @@ jobs:
           context: ./
           push: true
           tags: astb01/staybae-ui:${{steps.build_version.outputs.new_tag}},astb01/staybae-ui:latest
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.build_version.outputs.new_tag }}
+          name: Release ${{ steps.build_version.outputs.new_tag }}
+          body: ${{ steps.build_version.outputs.changelog }}
 
   # Deploy job
   deploy:

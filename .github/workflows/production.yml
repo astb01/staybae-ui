@@ -1,5 +1,5 @@
 name: Production Pipeline
-run-name: 'Building production release :rocket:''
+run-name: 'Building production release :rocket:'
 
 on:
   push:
